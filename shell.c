@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <string.h>
+#include "holberton.h"
 /**
  * main - fork + wait + execve example
  *
@@ -14,7 +10,7 @@ int main(void)
 	int status, chars;
 	char *argv[] = {NULL, NULL};
 	char *buffer = NULL;
-        size_t bufsize = 32;
+        size_t bufsize = 64;
 	int satty = 0;
 
 	satty = isatty(0);
@@ -40,6 +36,7 @@ int main(void)
 				{
 					perror("./shell");
 				}
+				free(buffer);
 			}
 			else
 			{
@@ -51,5 +48,6 @@ int main(void)
 			break;
 		}
 	}
+	free(buffer);
 	return (0);
 }
