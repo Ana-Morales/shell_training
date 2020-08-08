@@ -1,0 +1,1 @@
+This repo is a training for simple shell project
