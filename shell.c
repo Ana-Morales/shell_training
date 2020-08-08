@@ -11,35 +11,44 @@
 int main(void)
 {
 	pid_t child_pid;
-	int status;
+	int status, chars;
 	char *argv[] = {NULL, NULL};
 	char *buffer = NULL;
         size_t bufsize = 32;
+	int satty = 0;
 
-
-
+	satty = isatty(0);
 	while(1)
 	{
-		printf("$ ");
-		getline(&buffer, &bufsize, stdin);
-		argv[0] = strtok(buffer, "\n");
-		child_pid = fork();
-		if (child_pid == -1)
+		if (satty == 1)
 		{
-			perror("Error:");
-			return (1);
+			printf("$ ");
 		}
-		if (child_pid == 0)
+		chars =	getline(&buffer, &bufsize, stdin);
+		if (chars != -1)
 		{
-			printf("%s",argv[0]);
-			if (execve(argv[0], argv, NULL) == -1)
+			argv[0] = strtok(buffer, "\n");
+			child_pid = fork();
+			if (child_pid == -1)
 			{
-				perror("Error:");
+				perror("Error");
+				return (1);
+			}
+			if (child_pid == 0)
+			{
+				if (execve(argv[0], argv, NULL) == -1)
+				{
+					perror("./shell");
+				}
+			}
+			else
+			{
+				wait(&status);
 			}
 		}
 		else
 		{
-			wait(&status);
+			break;
 		}
 	}
 	return (0);

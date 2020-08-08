@@ -39,7 +39,7 @@ char *_getenv(const char *name)
 
 	return (err);
 }
-int main()
+/*int main()
 {
         char *path;
 
@@ -47,4 +47,4 @@ int main()
 	printf("%s\n", _getenv("LS_COLORS"));
 	printf("%s\n", path);
 	return (0);
-}
+	}*/
