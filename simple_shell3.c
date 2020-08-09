@@ -21,7 +21,7 @@ int main(void)
 		{
 			printf("$ ");
 		}
-		chars =	getline(&buffer, &bufsize, stdin);
+		chars =getline(&buffer, &bufsize, stdin);
 		if (chars == 1)
 		{
 			continue;
@@ -69,44 +69,32 @@ char *_which(char *str)
 {
 	unsigned int j = 0;
 	struct stat st;
-	char *path;
-	char *token, *str1, *path_3, *command;
+	char *path, *path1;
+	char *token, *str1, *path_3;
 	char *slash = "/";
-	char *path_path[100], *command_tok[50];
-	char *err = "Command not founded";
+	char *path_path[100];
 
 	path = _getenv("PATH");
-	printf("%s\n", path);
-	token = strtok(path, ":");
+	path1 = strdup(path);
+	token = strtok(path1, ":");
 	while (token != NULL)
 	{
 		path_path[j] = token;
 		j++;
 		token = strtok(NULL, ":");
 	}
+	free(path1);
 	path_path[j] = NULL;
-	printf("%s\n", path_path[0]);
-	command = strtok(str, "/");
-	j = 0;
-	while (command != NULL)
-        {
-                command_tok[j] = command;
-                j++;
-                command = strtok(NULL, "/");
-        }
-        command_tok[j] = NULL;
 
-
-	str1 = str_concat(slash, command_tok[j-1]);
+	str1 = str_concat(slash, str);
 
 	for (j = 0; path_path[j] != NULL; j++)
 	{
 		path_3 = str_concat(path_path[j], str1);
-		printf("%s\n", path_3);
 		if (stat(path_3, &st) == 0)
 		{
 			return(path_3);
 		}
 	}
-	return (err);
+	return (str);
 }
