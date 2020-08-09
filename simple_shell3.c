@@ -10,7 +10,7 @@ int main(void)
 	int status, chars, i;
 	char *argv[100];
 	char *buffer = NULL;
-	char *token, *comm;
+	char *token, *comm, *buffer_dup;
         size_t bufsize = 32;
 	int satty = 0;
 
@@ -21,6 +21,7 @@ int main(void)
 		{
 			printf("$ ");
 		}
+		signal(SIGINT, SIG_IGN);
 		chars =getline(&buffer, &bufsize, stdin);
 		if (chars == 1)
 		{
@@ -29,14 +30,18 @@ int main(void)
 		if (chars != -1)
 		{
 			i = 0;
-			token = strtok(buffer, " \n");
+			buffer_dup = _strdup(buffer);
+			token = strtok(buffer_dup, " \n");
 			while (token != NULL)
 			{
 				argv[i] = token;
 				i++;
 				token = strtok(NULL, " \n");
 			}
+/*			printf("%d\n",i);*/
 			argv[i] = NULL;
+			if (i == 0)
+				continue;
 			if (_strcmp(argv[0], "exit") == 0)
 				exit_func();
 			if (_strcmp(argv[0], "env") == 0)
@@ -56,6 +61,7 @@ int main(void)
 				if (execve(comm, argv, NULL) == -1)
 				{
 					perror("./shell");
+					exit(EXIT_SUCCESS);
 				}
 			}
 			else
@@ -80,7 +86,7 @@ char *_which(char *str)
 	char *path_path[100];
 
 	path = _getenv("PATH");
-	path1 = strdup(path);
+	path1 = _strdup(path);
 	token = strtok(path1, ":");
 	while (token != NULL)
 	{

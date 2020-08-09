@@ -15,12 +15,10 @@ char *_getenv(const char *name)
 	j = 0;
 	while (env[i] != NULL)
 	{
-		env1 = strdup(env[i]);
-/*		printf("%s\n", env[i]);*/
+		env1 = _strdup(env[i]);
 		tok = strtok(env1, "=");
 		while( tok != NULL ) {
                         env_name_val[j] = tok;
-/*			printf("env_name_val[%d]: %s\n", j, env_name_val[j]);*/
                         j++;
                         tok = strtok(NULL, "=");
 		}
@@ -30,8 +28,6 @@ char *_getenv(const char *name)
 	j = 0;
 	while (env_name_val[j] != NULL)
 	{
-/*		printf("env_name_val[%d]: %s name: %s\n", j, env_name_val[j], name);
-		printf("%d %d\n", _strlen(env_name_val[j]), _strlen(name));*/
 		if (_strcmp(env_name_val[j], name) == 0)
 		{
 			return (env_name_val[j+1]);
@@ -41,12 +37,3 @@ char *_getenv(const char *name)
 
 	return (err);
 }
-/*int main()
-{
-        char *path;
-
-	path = getenv("LS_COLORS");
-	printf("%s\n", _getenv("LS_COLORS"));
-	printf("%s\n", path);
-	return (0);
-	}*/

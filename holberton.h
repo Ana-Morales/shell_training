@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 extern char **environ;
 
@@ -20,4 +21,5 @@ int _strcmp(const char *s1, const char *s2);
 char *_which(char *str);
 void exit_func();
 void display_env();
+char *_strdup(char *str);
 #endif /*_HOLBERTON_H_*/
