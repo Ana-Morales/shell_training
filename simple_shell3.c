@@ -36,10 +36,15 @@ int main(void)
 				i++;
 				token = strtok(NULL, " \n");
 			}
-
-			comm = _which(argv[0]);
-
 			argv[i] = NULL;
+			if (_strcmp(argv[0], "exit") == 0)
+				exit_func();
+			if (_strcmp(argv[0], "env") == 0)
+			{
+				display_env();
+				continue;
+			}
+			comm = _which(argv[0]);
 			child_pid = fork();
 			if (child_pid == -1)
 			{

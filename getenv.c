@@ -3,19 +3,21 @@
 char *_getenv(const char *name)
 {
 
-	char **env;
+	char **env, *env1 = NULL;
 	char *tok;
 	char *env_name_val[500];
 	char *err = "Name not found";
 	int i, j;
+
 
 	env = environ;
 	i = 0;
 	j = 0;
 	while (env[i] != NULL)
 	{
+		env1 = strdup(env[i]);
 /*		printf("%s\n", env[i]);*/
-		tok = strtok(env[i], "=");
+		tok = strtok(env1, "=");
 		while( tok != NULL ) {
                         env_name_val[j] = tok;
 /*			printf("env_name_val[%d]: %s\n", j, env_name_val[j]);*/

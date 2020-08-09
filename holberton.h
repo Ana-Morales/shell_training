@@ -18,4 +18,6 @@ char *_getenv(const char *name);
 int _strlen(const char *s);
 int _strcmp(const char *s1, const char *s2);
 char *_which(char *str);
+void exit_func();
+void display_env();
 #endif /*_HOLBERTON_H_*/
