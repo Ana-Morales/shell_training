@@ -13,7 +13,8 @@
 extern char **environ;
 
 /**
- * struct builtin_s - struct to find a built_in command and its associated funct
+ * struct builtin_s - struct to find a built_in command
+ *and its associated funct
  *
  * @command: command written by the user
  * @fp: The function associated
