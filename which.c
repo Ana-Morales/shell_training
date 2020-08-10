@@ -1,55 +1,40 @@
 #include "holberton.h"
-
 /**
- * main - which example
+ * _which - shows the full path of commands
+ * @str: command
  *
- * Return: Always 0.
+ * Return: path of the command.
  */
-
-int main(int argc, char *argv[])
+char *_which(char *str)
 {
-	unsigned int i, j = 0;
+	unsigned int j = 0;
 	struct stat st;
-	char *path;
+	char *path, *path1;
 	char *token, *str1, *path_3;
 	char *slash = "/";
 	char *path_path[100];
 
 	path = _getenv("PATH");
-	if (argc < 2)
+	path1 = _strdup(path);
+	token = strtok(path1, ":");
+	while (token != NULL)
 	{
-		printf("Usage: %s path_to_file ...\n", argv[0]);
-		return (1);
+		path_path[j] = token;
+		j++;
+		token = strtok(NULL, ":");
 	}
-	else
+	free(path1);
+	path_path[j] = NULL;
+
+	str1 = str_concat(slash, str);
+
+	for (j = 0; path_path[j] != NULL; j++)
 	{
-		token = strtok(path, ":");
-
-		while( token != NULL ) {
-			path_path[j] = token;
-/*			printf("path_path[%d]: %s\n", j, path_path[j]);*/
-			j++;
-			token = strtok(NULL, ":");
-			}
-		path_path[j] = NULL;
-		i = 1;
-		while (argv[i])
+		path_3 = str_concat(path_path[j], str1);
+		if (stat(path_3, &st) == 0)
 		{
-			str1 = str_concat(slash, argv[i]);
-			for (j = 0; path_path[j] != NULL; j++)
-			{
-				path_3 = str_concat(path_path[j], str1);
-/*				printf("path_path[%d]: %s\n", j, path_path[j]);
-				printf("path_3: %s\n", path_3);*/
-
-				if (stat(path_3, &st) == 0)
-				{
-					printf("%s\n", path_3);
-
-				}
-			}
-			i++;
+			return (path_3);
 		}
 	}
-	return (0);
+	return (str);
 }
